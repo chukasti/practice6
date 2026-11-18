@@ -1,0 +1,18 @@
+/* ARCHITECTURE ENTRY POINT.
+   Порядок слоёв — архитектурный контракт (см. reports/ADR_TEMPLATE.md):
+   reset  — нормализация браузера;
+   legacy — vendor CSS подрядчика (только через layer(legacy), без принудительных объявлений);
+   tokens — семантические переменные тем;
+   base   — каркас страницы;
+   components — 7 семейств библиотеки;
+   states — hover/focus-visible/active/disabled/invalid/checked;
+   utilities — атомарные утилиты.
+   Unlayered-импорт запрещён: он дал бы vendor CSS приоритет над всей
+   библиотекой (baseline-дефект A-01). */
+@layer reset, legacy, tokens, base, components, states, utilities;
+@import url('./legacy.css') layer(legacy);
+@import url('./tokens.css') layer(tokens);
+@import url('./base.css') layer(base);
+@import url('./components.css') layer(components);
+@import url('./states.css') layer(states);
+@import url('./utilities.css') layer(utilities);

@@ -1,0 +1,34 @@
+/* STATES — состояния взаимодействия и доступности.
+   Поздний слой states даёт приоритет над вариантами components без роста
+   специфичности. Здесь нет глобальных .is-* классов (дефект A-04) и нет
+   hover у неинтерактивных элементов (A-10). */
+
+/* ---------- Кнопка ---------- */
+.ui-button:hover { transform: translateY(-1px); }
+.ui-button--primary:hover { background: var(--color-accent-hover); }
+.ui-button--secondary:hover, .ui-button--ghost:hover { background: var(--color-surface-alt); }
+.ui-button--danger:hover { background: var(--color-danger-hover); }
+.ui-button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.ui-button:active { transform: translateY(0); }
+.ui-button:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; transform: none; }
+
+/* ---------- Поле: ошибка только по факту взаимодействия ---------- */
+/* Источник состояния — aria-invalid, который JS выставляет после blur/submit.
+   :invalid не используется: у пустого required-поля он истинен до ввода (A-05). */
+.ui-field:has(input[aria-invalid='true']) input { border-color: var(--color-danger); background: var(--color-danger-bg); }
+.ui-field:has(textarea[aria-invalid='true']) textarea { border-color: var(--color-danger); background: var(--color-danger-bg); }
+.ui-field:has(input[aria-invalid='true']) .ui-field__hint { color: var(--color-danger); }
+.ui-field input:focus-visible, .ui-field textarea:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+
+/* ---------- Переключатель ---------- */
+.ui-switch input:focus-visible + .ui-switch__track { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.ui-switch input:disabled + .ui-switch__track { opacity: .4; }
+.ui-switch:has(input:disabled) { cursor: not-allowed; }
+
+/* ---------- Уведомление ---------- */
+.ui-alert { transition: background-color 240ms, color 240ms; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms; animation-duration: .01ms; scroll-behavior: auto; }
+}
